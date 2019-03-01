@@ -1,9 +1,0 @@
-
-local component = require("component")
-local computer = require("computer")
-local event = require("event")
-local term = require("term")
-local sides = require("sides")
-
-local gpu = component.gpu
-local beep = component.computer.beep
