@@ -1,6 +1,4 @@
-
-
-local version="8.0"
+local version="0.0.1"
 
 local component = require("component")
 local computer = require("computer")
@@ -10,7 +8,8 @@ local sides = require("sides")
 
 local gpu = component.gpu
 local beep = component.computer.beep
-local reactor=component.reactor_chamber
+local reactor=component.reactor
+local engine=component.redstone
 
 local rodSlot = component.inventory_controller.getStackInSlot
 
@@ -19,6 +18,16 @@ Heat=reactor.getMaxHeat
 getHeat=reactor.getHeat 
 EUOutput=reactor.getReactorEUOutput 
 --reactor
+
+--redstonecontrol
+function engineOn()
+	engine.setOutput(3,1)
+end
+function engineOff()
+	engine.setOutput(3,0)
+end
+--redstonecontrol
+
 
 --tables
 local items={}
@@ -128,6 +137,16 @@ local w,h = gpu.getResolution()
 -- end of config
 
 
+--------------------------------
+print("Start/Stop")
+local Antwort=io.read()
+if Antwort=="Start" then
+	engineOn()
+else
+	engineOff()
+end
+-----
+
 --start_time
 
 --timer
@@ -176,8 +195,6 @@ end
 
 gpu.setForeground(0xffffff)
 
-
------
 term.clear()
 term.setCursor(1,1)
 
@@ -244,17 +261,18 @@ while true do
     currentRods[4]="empty"
   end
   
-  centerF(20, string.format("--%s---%s--",draw1(),draw2()))
-  centerF(21, string.format("--%s---%s--",draw3(),draw4()))
+ --centerF(20, string.format("--%s---%s--",draw1(),draw2()))
+  --centerF(21, string.format("--%s---%s--",draw3(),draw4()))
   
-  centerF(8, string.format("- Reactor is:             %s       -",status())) 
-  centerF(9, string.format("- Reactor maxheat:        %s         -",maxheat())) 
-  centerF(10, string.format("- Reactor heat:           %s          -",  getheat())) 
-  centerF(11, string.format("- Reactor EU Output:      %s          -",  getEU())) 
-  centerF(30, "Data updates every second: %2d", tickCnt)
-  centerF(31, "Current up time: %2d hours %2d min", hours, mins)
+  --centerF(8, string.format("- Reactor is:             %s       -",status())) 
+  --centerF(9, string.format("- Reactor maxheat:        %s         -",maxheat())) 
+  --centerF(10, string.format("- Reactor heat:           %s          -",  getheat())) 
+  --centerF(11, string.format("- Reactor EU Output:      %s          -",  getEU())) 
+  --centerF(30, "Data updates every second: %2d", tickCnt)
+  --centerF(31, "Current up time: %2d hours %2d min", hours, mins)
   
   --beep()
-  os.sleep(1)
+
+os.sleep(1)
 
 end
